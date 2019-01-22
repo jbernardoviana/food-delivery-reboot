@@ -7,6 +7,7 @@ class Router
     @customers_controller = controllers[:customers]
     @employees_controller = controllers[:employees]
     @sessions_controller = controllers[:sessions]
+    @orders_controller = controllers[:orders]
 
     @running = true
   end
@@ -56,6 +57,8 @@ class Router
     puts "3 - List Customers"
     puts "4 - Add Customers"
     puts "5 - List Employees"
+    puts "6 - List undelivered orders"
+    puts "7 - Add order to Employee (delivery_guy)"
     puts "0 - Exit"
     print ">"
     gets.chomp.to_i
@@ -65,9 +68,10 @@ class Router
     puts "------------WELCOME TO FOOD DELIVERY ----------"
     puts "-----------------------MENU--------------------"
     puts "1 - List Meals"
-    puts "2 - Check Undelivered Orders"
-    puts "3 - Mark order as delivered"
-    puts "4 - List Customers"
+    puts "2 - Mark order as delivered"
+    puts "3 - List Customers"
+    puts "4 - List MY undelivered orders"
+    puts "5 - Mark MY order as delivered!"
     puts "0 - Exit"
     print ">"
     gets.chomp.to_i
@@ -81,6 +85,12 @@ class Router
       when 3 then @customers_controller.list
       when 4 then @customers_controller.create
       when 5 then @employees_controller.list
+      when 6 then @orders_controller.list_undelivered_orders
+      when 7 then
+        @meals_controller.list
+        @customers_controller.list
+        @employees_controller.list
+        @orders_controller.create
       when 0 then
         @running = false
         @current_user = @sessions_controller.destroy_session
@@ -93,8 +103,8 @@ class Router
       when 1 then @meals_controller.list
       when 2 then @customers_controller.list
       when 3 then @employees_controller.list
-      # MARK ORDER AS DELIVERED
-      # SEE UNDELIVERED ORDERS
+      when 4 then @orders_controller.list_my_orders(user)
+      when 5 then @orders_controller.mark_order_as_delivered(user)
       when 0 then
         @running = false
         @current_user = @sessions_controller.destroy_session

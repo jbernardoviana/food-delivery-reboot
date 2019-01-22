@@ -4,6 +4,7 @@ class EmployeesView
     employees.each do |employee|
       puts "#{employee.id} #{employee.username} - #{employee.role}"
     end
+    puts "------------------------------------------------------"
   end
 
 end
